@@ -1,6 +1,6 @@
 program: mnistop.py
 project: mnist-add
-entity: nesy-gems
+entity: blackbox-learning
 method: grid
 parameters:
   N:

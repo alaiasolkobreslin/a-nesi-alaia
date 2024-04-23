@@ -37,7 +37,7 @@ if __name__ == '__main__':
         "test": False,
         "batch_size": 16,
         "batch_size_test": 16,
-        "amt_samples": 100,
+        "amount_samples": 100,
         "predict_only": False,
         "use_prior": True,
         "q_lr": 1e-3,
@@ -66,7 +66,7 @@ if __name__ == '__main__':
         with open(config_file, 'r') as f:
             config.update(yaml.safe_load(f))
 
-        run = wandb.init(config=config, project="mnist-add", entity="nesy-gems")
+        run = wandb.init(config=config, project="mnist-add", entity="blackbox-learning")
         config = wandb.config
         print(config)
     elif SWEEP:
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         name = "addition_" + str(config["N"])
         wandb.init(
             project=f"mnist-{config['op']}",
-            entity="nesy-gems",
+            entity="blackbox-learning",
             name=name,
             notes="Test run",
             mode="disabled",
@@ -137,7 +137,9 @@ if __name__ == '__main__':
             x = torch.cat([numb1, numb2], dim=1).to(device)
             label = label.to(device)
             try:
-                loss_nrm, loss_percept = model.train_all(x, label)
+                trainresult = model.train_all(x, label)
+                loss_percept = trainresult.percept_loss
+                loss_nrm = trainresult.q_loss
             except NoPossibleActionsException:
                 print("No possible actions during training")
                 continue

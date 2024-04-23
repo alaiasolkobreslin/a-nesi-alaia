@@ -1,6 +1,6 @@
 program: mnistadd.py
 project: test-project
-entity: nesy-gems
+entity: blackbox-learning
 method: grid
 parameters:
   N:
